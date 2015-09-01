@@ -2,51 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use Request;
+use Illuminate\Http\Request as Requesta; // native class to handle requests
+//use Request; // This is a Facade and can be removed because we are using the CreateUserRequest object $request
+//use App\Http\Requests\CreateUserRequest; // class created by me, useful when you have a lot of validations!
 use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $users = User::latest()->get();
         return view ('users.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
     public function create()
     {
         return view('users.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
+
+    public function store(Requesta $request)
     {
-        User::create(Request::all());
+        $this->validate($request, ['name' => 'required|min:3']);
+        User::create($request->all());
+
+        \Session::flash('flash_message', 'Your user has been created');
+
         return redirect('users');
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+
     public function show($id)
     {
         $user  = User::findOrFail($id);
@@ -54,35 +46,24 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('users.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(Requesta $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->update($request->all());
+
+        return redirect('users');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function destroy($id)
     {
         //

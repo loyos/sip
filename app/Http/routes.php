@@ -11,17 +11,30 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('/auth/login');
+//});
+
+Route::get('/', 'Auth\AuthController@getLogin' );
 
 /*Route::get('about', function () {
      return view('welcome');
 });*/
 
 Route::get('about', 'PagesController@about' );
+//
+//Route::get('users', 'UsersController@index' );
+//Route::get('users/create', 'UsersController@create' );
+//Route::get('users/{id}', 'UsersController@show' );
+//Route::post('users', 'UsersController@store' );
 
-Route::get('users', 'UsersController@index' );
-Route::get('users/create', 'UsersController@create' );
-Route::get('users/{id}', 'UsersController@show' );
-Route::post('users', 'UsersController@store' );
+Route::resource('users', 'UsersController');
+
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
