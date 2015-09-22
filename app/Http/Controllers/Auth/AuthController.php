@@ -23,10 +23,11 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $redirectPath = '/users';
+    protected $redirectPath = '/users/dashboard'; // redirect to this path once you're logged
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+//        $this->middleware('auth', ['except' => ['getLogin','getRegister','getLogout']]);
+        $this->middleware('guest', ['only' => ['getLogin','getRegister']]); // if I'm logged I won't be able to access   this views
     }
 
     /**

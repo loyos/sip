@@ -14,7 +14,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth'); // require being logged to access every view here
     }
 
     public function index()
@@ -67,5 +67,10 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function dashboard()
+    {
+        return view('users.dashboard');
     }
 }

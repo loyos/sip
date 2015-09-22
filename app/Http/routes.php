@@ -28,7 +28,9 @@ Route::get('about', 'PagesController@about' );
 //Route::get('users/{id}', 'UsersController@show' );
 //Route::post('users', 'UsersController@store' );
 
+Route::get('users/dashboard', 'UsersController@dashboard');
 Route::resource('users', 'UsersController');
+
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

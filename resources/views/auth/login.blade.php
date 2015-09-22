@@ -20,7 +20,7 @@
                         <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
                     {!! Form::close() !!}
                 </div>
-                <a href="#" class="text-center new-account">Create an account </a>
+                <a href="{{action('Auth\AuthController@getRegister')}}" class="text-center new-account">Create an account </a>
             </div>
         </div>
     </div>

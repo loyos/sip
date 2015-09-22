@@ -3,10 +3,6 @@
 @section('content')
     <h1> Users </h1>
 
-    <?php if (Auth::check()) {
-        echo 'el usuario esta logueado';
-    }
-    ?>
     <hr>
 
     @foreach($users as $user)

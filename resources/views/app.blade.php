@@ -4,12 +4,27 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../../public/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 </head>
 <body>
 
     <div class = "container">
+        <div class="header">
+            @if (Auth::check())
+                <div class="dropdown logout">
+                    Hola {{Auth::user()->name}}
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="{{action('UsersController@edit', Auth::user()->id )}}">Edit info</a></li>
+                        <li><a href="{{action('Auth\AuthController@getLogout')}}">Logout</a></li>
+                    </ul>
+                </div>
+            @endif
+        </div>
 
         @if(Session::has('flash_message'))
 
